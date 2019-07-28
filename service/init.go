@@ -5,8 +5,8 @@ import (
 	"errors"
 	"log"
 
-	"git.urantiatech.com/cloudcms/lightcms/api"
-	"git.urantiatech.com/cloudcms/lightcms/item"
+	"git.urantiatech.com/cloudcms/cloudcms/api"
+	"git.urantiatech.com/cloudcms/cloudcms/item"
 	"github.com/blevesearch/bleve"
 	"github.com/boltdb/bolt"
 )

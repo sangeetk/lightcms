@@ -13,8 +13,8 @@ import (
 	"strings"
 	"time"
 
-	"git.urantiatech.com/cloudcms/lightcms/api"
-	i "git.urantiatech.com/cloudcms/lightcms/item"
+	"git.urantiatech.com/cloudcms/cloudcms/api"
+	i "git.urantiatech.com/cloudcms/cloudcms/item"
 	"github.com/blevesearch/bleve"
 	"github.com/boltdb/bolt"
 	"github.com/urantiatech/kit/endpoint"

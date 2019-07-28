@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"git.urantiatech.com/cloudcms/lightcms/api"
+	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"github.com/boltdb/bolt"
 	"github.com/urantiatech/kit/endpoint"
 )

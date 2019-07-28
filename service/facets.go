@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"git.urantiatech.com/cloudcms/lightcms/api"
+	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"github.com/blevesearch/bleve"
 	"github.com/blevesearch/bleve/search"
 	q "github.com/blevesearch/bleve/search/query"

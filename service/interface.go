@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"git.urantiatech.com/cloudcms/lightcms/api"
+	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"golang.org/x/text/language"
 )
 
