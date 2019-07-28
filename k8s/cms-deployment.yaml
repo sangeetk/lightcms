@@ -1,0 +1,49 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: lightcms
+  labels:
+    app: lightcms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lightcms
+  template:
+    metadata:
+      labels:
+        app: lightcms
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: lightcms
+        image: reg.urantiatech.com/cloudcms/lightcms
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: "/database"
+          name: nfs-lightcms
+        - mountPath: "/etc/ssl/certs"
+          name: certs
+          readOnly: true
+      volumes:
+      - name: nfs-lightcms
+        persistentVolumeClaim:
+          claimName: nfs-lightcms
+      - name: certs
+        hostPath:
+          path: "/etc/ssl/certs"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lightcms
+spec:
+  ports:
+  - name: backend
+    targetPort: 8080
+    port: 80
+  selector:
+    app: lightcms
