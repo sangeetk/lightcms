@@ -88,9 +88,8 @@ func (s *Service) Create(ctx context.Context, req *api.CreateRequest, sync bool)
 
 				if file.URI != "" {
 					// Use the existing file URI
-				} else {
+				} else if file.Name != "" && file.Size > 0 && len(file.Bytes) > 0 {
 					file.URI = fmt.Sprintf("/drive/%s/%s/%d/%s", req.Type, req.Language, nextSeq, file.Name)
-
 					filemap := v.(map[string]interface{})
 					filemap["uri"] = file.URI
 					filemap["bytes"] = nil

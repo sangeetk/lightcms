@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"math"
 	"net/http"
 
 	"git.urantiatech.com/cloudcms/cloudcms/api"
@@ -28,8 +29,11 @@ func (s *Service) List(ctx context.Context, req *api.ListRequest) (*api.ListResu
 	}
 	searchRequest.SortBy([]string{req.SortBy})
 	searchRequest.Fields = []string{"*"}
-	searchRequest.Size = req.Size
-	if searchRequest.Size <= 0 {
+	if req.Size >= 0 {
+		searchRequest.Size = req.Size
+	} else if req.Size == -1 {
+		searchRequest.Size = math.MaxInt32
+	} else {
 		searchRequest.Size = 10
 	}
 	searchRequest.From = req.Skip

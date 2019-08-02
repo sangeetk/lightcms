@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 
 	"git.urantiatech.com/cloudcms/cloudcms/api"
@@ -33,4 +35,12 @@ type Service struct{}
 func Encode(ctx context.Context, w http.ResponseWriter, response interface{}) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	return json.NewEncoder(w).Encode(response)
+}
+
+func PrintCreateReq(r *api.CreateRequest) {
+	json, err := json.MarshalIndent(r, "  ", "  ")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(string(json))
 }
