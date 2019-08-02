@@ -27,7 +27,11 @@ func (s *Service) List(ctx context.Context, req *api.ListRequest) (*api.ListResu
 	if req.SortBy == "" {
 		req.SortBy = "id"
 	}
-	searchRequest.SortBy([]string{req.SortBy})
+	if req.SortOrder == api.SortDesc {
+		searchRequest.SortBy([]string{"-" + req.SortBy})
+	} else {
+		searchRequest.SortBy([]string{req.SortBy})
+	}
 	searchRequest.Fields = []string{"*"}
 	if req.Size >= 0 {
 		searchRequest.Size = req.Size
