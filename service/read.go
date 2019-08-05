@@ -3,12 +3,23 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"time"
 
 	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"github.com/boltdb/bolt"
+	"github.com/patrickmn/go-cache"
 	"github.com/urantiatech/kit/endpoint"
 )
+
+var items *cache.Cache
+
+func init() {
+	// Create a cache with a default expiration time of 5 minutes, and which
+	// purges expired items every 10 minutes
+	items = cache.New(5*time.Minute, 10*time.Minute)
+}
 
 // Read - returns a single item
 func (s *Service) Read(ctx context.Context, req *api.ReadRequest) (*api.Response, error) {
@@ -18,6 +29,13 @@ func (s *Service) Read(ctx context.Context, req *api.ReadRequest) (*api.Response
 	if _, ok := Index[req.Type]; !ok {
 		resp.Err = api.ErrorInvalidContentType.Error()
 		return &resp, nil
+	}
+
+	key := fmt.Sprintf("%s.%s.%s", req.Language, req.Type, req.Slug)
+
+	r, ok := items.Get(key)
+	if ok {
+		return r.(*api.Response), nil
 	}
 
 	// Open database in read-only mode
@@ -51,6 +69,7 @@ func (s *Service) Read(ctx context.Context, req *api.ReadRequest) (*api.Response
 		resp.Err = err.Error()
 	}
 
+	items.Set(key, &resp, cache.DefaultExpiration)
 	return &resp, nil
 }
 
