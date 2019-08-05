@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -69,6 +70,10 @@ func (s *Service) Delete(ctx context.Context, req *api.DeleteRequest, sync bool)
 		resp.Err = err.Error()
 		return &resp, nil
 	}
+
+	// Delete from the cache
+	key := fmt.Sprintf("%s.%s.%s", req.Language, req.Type, req.Slug)
+	RespCache.Delete(key)
 
 	return &resp, nil
 }

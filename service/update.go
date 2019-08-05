@@ -15,6 +15,7 @@ import (
 	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"git.urantiatech.com/cloudcms/cloudcms/item"
 	"github.com/boltdb/bolt"
+	"github.com/patrickmn/go-cache"
 	"github.com/urantiatech/kit/endpoint"
 )
 
@@ -135,6 +136,10 @@ func (s *Service) Update(ctx context.Context, req *api.UpdateRequest, sync bool)
 		resp.Err = err.Error()
 		return &resp, nil
 	}
+
+	// Update the cache
+	key := fmt.Sprintf("%s.%s.%s", req.Language, req.Type, req.Slug)
+	RespCache.Set(key, &resp, cache.DefaultExpiration)
 
 	return &resp, nil
 }

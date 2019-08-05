@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"git.urantiatech.com/cloudcms/cloudcms/api"
+	"github.com/patrickmn/go-cache"
 	"golang.org/x/text/language"
 )
 
@@ -30,6 +31,9 @@ type Interface interface {
 
 // Service struct for accessing services
 type Service struct{}
+
+// RespCache caches the response
+var RespCache *cache.Cache
 
 // Encode the response
 func Encode(ctx context.Context, w http.ResponseWriter, response interface{}) error {

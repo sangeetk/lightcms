@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"time"
 
 	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"git.urantiatech.com/cloudcms/cloudcms/item"
 	"github.com/blevesearch/bleve"
 	"github.com/boltdb/bolt"
+	"github.com/patrickmn/go-cache"
 )
 
 // Initialize function
@@ -62,6 +64,10 @@ func Initialize(dbFile string) error {
 	if err != nil {
 		return err
 	}
+
+	// Create a cache with a default expiration time of 5 minutes, and which
+	// purges expired items every 10 minutes
+	RespCache = cache.New(5*time.Minute, 10*time.Minute)
 
 	return nil
 }
