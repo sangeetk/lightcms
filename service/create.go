@@ -17,7 +17,7 @@ import (
 	i "git.urantiatech.com/cloudcms/cloudcms/item"
 	"github.com/blevesearch/bleve"
 	"github.com/boltdb/bolt"
-	"github.com/urantiatech/kit/endpoint"
+	"github.com/go-kit/kit/endpoint"
 	"golang.org/x/text/language"
 )
 

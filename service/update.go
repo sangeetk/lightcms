@@ -15,8 +15,8 @@ import (
 	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"git.urantiatech.com/cloudcms/cloudcms/item"
 	"github.com/boltdb/bolt"
+	"github.com/go-kit/kit/endpoint"
 	"github.com/patrickmn/go-cache"
-	"github.com/urantiatech/kit/endpoint"
 )
 
 // Update - creates a single item

@@ -8,8 +8,8 @@ import (
 
 	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"github.com/boltdb/bolt"
+	"github.com/go-kit/kit/endpoint"
 	"github.com/patrickmn/go-cache"
-	"github.com/urantiatech/kit/endpoint"
 )
 
 // Read - returns a single item

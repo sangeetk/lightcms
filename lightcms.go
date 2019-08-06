@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	s "git.urantiatech.com/cloudcms/lightcms/service"
+	h "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
-	h "github.com/urantiatech/kit/transport/http"
 	"golang.org/x/text/language"
 )
 
