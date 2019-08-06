@@ -36,6 +36,11 @@ func Run(port int) {
 	flag.StringVar(&dbFile, "dbFile", "db/cloudcms.db", "The database filename")
 	flag.Parse()
 
+	// Using English as default language
+	if len(s.Languages) == 0 {
+		s.Languages = append(s.Languages, language.English)
+	}
+
 	if err := s.Initialize(dbFile); err != nil {
 		log.Fatal(err.Error())
 	}
