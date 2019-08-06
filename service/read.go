@@ -9,7 +9,6 @@ import (
 	"git.urantiatech.com/cloudcms/cloudcms/api"
 	"github.com/boltdb/bolt"
 	"github.com/go-kit/kit/endpoint"
-	"github.com/patrickmn/go-cache"
 )
 
 // Read - returns a single item
@@ -60,7 +59,7 @@ func (s *Service) Read(ctx context.Context, req *api.ReadRequest) (*api.Response
 		resp.Err = err.Error()
 	}
 
-	RespCache.Set(key, &resp, cache.DefaultExpiration)
+	// RespCache.Set(key, &api.Response{resp}, cache.DefaultExpiration)
 	return &resp, nil
 }
 

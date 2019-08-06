@@ -16,7 +16,6 @@ import (
 	"git.urantiatech.com/cloudcms/cloudcms/item"
 	"github.com/boltdb/bolt"
 	"github.com/go-kit/kit/endpoint"
-	"github.com/patrickmn/go-cache"
 )
 
 // Update - creates a single item
@@ -139,7 +138,7 @@ func (s *Service) Update(ctx context.Context, req *api.UpdateRequest, sync bool)
 
 	// Update the cache
 	key := fmt.Sprintf("%s.%s.%s", req.Language, req.Type, req.Slug)
-	RespCache.Set(key, &resp, cache.DefaultExpiration)
+	RespCache.Delete(key)
 
 	return &resp, nil
 }
