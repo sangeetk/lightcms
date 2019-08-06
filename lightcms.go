@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	s "git.urantiatech.com/cloudcms/lightcms/service"
+	"git.urantiatech.com/pkg/lang"
 	h "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 	"golang.org/x/text/language"
@@ -15,6 +17,16 @@ import (
 // Languages supported
 func Languages(languages []language.Tag) {
 	s.Languages = languages
+}
+
+// EnableLanguages parses csv list
+func EnableLanguages(csv string) {
+	list := strings.Split(csv, ",")
+	for _, code := range list {
+		if l := lang.CodeToTag(code); l != language.Und {
+			s.Languages = append(s.Languages, l)
+		}
+	}
 }
 
 // Run method should be called from main function
