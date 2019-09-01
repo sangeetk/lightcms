@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -22,7 +21,6 @@ func (s *Service) FacetsSearch(ctx context.Context, req *api.FacetsSearchRequest
 		fmt.Println(string(j))
 	}
 
-	log.Printf("req.Query=[%s]\n", req.Query)
 	var resp = api.FacetsSearchResults{Type: req.Type}
 	var searchRequest *bleve.SearchRequest
 	var query q.Query
@@ -49,13 +47,16 @@ func (s *Service) FacetsSearch(ctx context.Context, req *api.FacetsSearchRequest
 
 	// Add each facet request to search
 	for fname, f := range req.Facets {
+		// Term facets
 		facet := bleve.NewFacetRequest(f.Field, f.Size)
+		// DateTime range facets
 		for tname, trange := range f.DateTimeRanges {
 			if trange.Start.IsZero() && trange.End.IsZero() {
 				trange.End = time.Now()
 			}
 			facet.AddDateTimeRange(tname, trange.Start, trange.End)
 		}
+		// Numeric range facets
 		for nname, nrange := range f.NumericRanges {
 			facet.AddNumericRange(nname, &nrange.Min, &nrange.Max)
 		}

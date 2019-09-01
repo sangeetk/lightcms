@@ -49,7 +49,12 @@ func Initialize(dbFile string) error {
 
 				// Create in-memory index for each supported language
 				if _, ok := Index[t][l.String()]; !ok {
+
 					mapping := bleve.NewIndexMapping()
+					if item.ContentMapping != nil {
+						mapping.DefaultMapping = item.ContentMapping
+					}
+
 					Index[t][l.String()], err = bleve.NewMemOnly(mapping)
 					if err != nil {
 						return err
