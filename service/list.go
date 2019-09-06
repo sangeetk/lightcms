@@ -21,8 +21,12 @@ func (s *Service) List(ctx context.Context, req *api.ListRequest) (*api.ListResu
 		return &resp, nil
 	}
 
-	query := bleve.NewMatchAllQuery()
-	searchRequest = bleve.NewSearchRequest(query)
+	if req.Status == "" {
+		searchRequest = bleve.NewSearchRequest(bleve.NewMatchAllQuery())
+	} else {
+		query := bleve.NewQueryStringQuery("+status:" + req.Status)
+		searchRequest = bleve.NewSearchRequest(query)
+	}
 
 	if req.SortBy == "" {
 		req.SortBy = "id"
