@@ -75,6 +75,9 @@ func (s *Service) Delete(ctx context.Context, req *api.DeleteRequest, sync bool)
 	key := fmt.Sprintf("%s.%s.%s", req.Language, req.Type, req.Slug)
 	RespCache.Delete(key)
 
+	fields := resp.Content.(map[string]interface{})
+	fields["status"] = "deleted"
+
 	return &resp, nil
 }
 
